@@ -55,8 +55,8 @@ data "aws_subnets" "default_subnets" {
 # IAM ROLE FOR EKS CLUSTER
 # -------------------------
 
-resource "aws_iam_role" "eks_role2" {
-  name = "my-eks-terraform2"
+resource "aws_iam_role" "eks_role-1" {
+  name = "my-eks-terraform-1"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -71,7 +71,7 @@ resource "aws_iam_role" "eks_role2" {
 }
 
 resource "aws_iam_role_policy_attachment" "eks_cluster_policy" {
-  role       = aws_iam_role.eks_role2.name
+  role       = aws_iam_role.eks_role-1.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
 }
 
@@ -81,7 +81,7 @@ resource "aws_iam_role_policy_attachment" "eks_cluster_policy" {
 
 resource "aws_eks_cluster" "eks_cluster" {
   name     = var.cluster_name
-  role_arn = aws_iam_role.eks_role2.arn
+  role_arn = aws_iam_role.eks_role-1.arn
 
   vpc_config {
     subnet_ids              = data.aws_subnets.default_subnets.ids
@@ -97,8 +97,8 @@ resource "aws_eks_cluster" "eks_cluster" {
 # IAM ROLE FOR NODE GROUP
 # -------------------------
 
-resource "aws_iam_role" "eks_node_role2" {
-  name = "my-eks-node-role-terraform2"
+resource "aws_iam_role" "eks_node_role-1" {
+  name = "my-eks-node-role-terraform-1"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -113,17 +113,17 @@ resource "aws_iam_role" "eks_node_role2" {
 }
 
 resource "aws_iam_role_policy_attachment" "node_worker_policy" {
-  role       = aws_iam_role.eks_node_role2.name
+  role       = aws_iam_role.eks_node_role-1.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
 }
 
 resource "aws_iam_role_policy_attachment" "node_cni_policy" {
-  role       = aws_iam_role.eks_node_role2.name
+  role       = aws_iam_role.eks_node_role-1.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
 }
 
 resource "aws_iam_role_policy_attachment" "node_ecr_policy" {
-  role       = aws_iam_role.eks_node_role2.name
+  role       = aws_iam_role.eks_node_role-1.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
 
@@ -137,7 +137,7 @@ resource "aws_eks_node_group" "eks_node_group" {
   node_role_arn   = aws_iam_role.eks_node_role2.arn
   subnet_ids      = data.aws_subnets.default_subnets.ids
 
-  # ⚠️ IMPORTANT FIX (recommended
+  
   instance_types = ["c7i-flex.large"]
 
   scaling_config {
@@ -162,8 +162,8 @@ resource "aws_eks_node_group" "eks_node_group" {
 # ARGOCD INSTALL (HELM)
 # -------------------------
 
-resource "helm_release" "argocd" {
-  name       = "argocd"
+resource "helm_release" "argocd-1" {
+  name       = "argocd-1"
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argo-cd"
   namespace  = "argocd"
