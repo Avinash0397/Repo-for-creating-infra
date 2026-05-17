@@ -55,8 +55,8 @@ data "aws_subnets" "default_subnets" {
 # IAM ROLE FOR EKS CLUSTER
 # -------------------------
 
-resource "aws_iam_role" "eks_role" {
-  name = "my-eks-terraform"
+resource "aws_iam_role" "eks_role1" {
+  name = "my-eks-terraform1"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -97,8 +97,8 @@ resource "aws_eks_cluster" "eks_cluster" {
 # IAM ROLE FOR NODE GROUP
 # -------------------------
 
-resource "aws_iam_role" "eks_node_role" {
-  name = "my-eks-node-role-terraform"
+resource "aws_iam_role" "eks_node_role1" {
+  name = "my-eks-node-role-terraform1"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
