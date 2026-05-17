@@ -1,9 +1,9 @@
 variable "aws_region" {
-  default = "eu-north-1"
+  default = "ap-south-1"
 }
 
 variable "cluster_name" {
-  default = "my-cluster-main"
+  default = "avinash-cluster"
 }
 
 
