@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v3
 
     #  2. Setup Terraform
-    - name: Setup Terraform
+    - name: Setup Terraform in AWS
       uses: hashicorp/setup-terraform@v3
 
     #  3. Configure AWS
